@@ -9,13 +9,9 @@ def find_com_port():
 
 
 class Controller:
-    def __init__(self, port):
+    def __init__(self, port=None):
+        port = port or find_com_port()
         self._controller = serial.Serial(port=port, baudrate=115200, timeout=0.1)
 
     def rotate(self, steps: int, motor: str = 'a'):
         self._controller.write(f'{motor}{steps}\n'.encode('utf-8'))
-
-
-if __name__ == '__main__':
-    port = find_com_port()
-    controller = Controller(port)
